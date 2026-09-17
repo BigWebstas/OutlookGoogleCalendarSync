@@ -168,7 +168,6 @@ namespace OutlookGoogleCalendarSync {
                 
                 user_properties = new Dictionary<String, Dictionary<String, String>>();
                 user_properties.Add("ogcs_version", new Dictionary<String, String> { { "value", System.Windows.Forms.Application.ProductVersion } });
-                user_properties.Add("benefactor", new Dictionary<String, String> { { "value", Settings.Instance.UserIsBenefactor().ToString() } });
                 user_properties.Add("account_present", new Dictionary<String, String> { { "value", (!String.IsNullOrEmpty(Settings.Instance.GaccountEmail)).ToString() } });
                 user_properties.Add("profiles", new Dictionary<String, String> { { "value", Settings.Instance.Calendars.Count.ToString() } });
                 user_properties.Add("outlook_version", new Dictionary<String, String> { { "value", Telemetry.Instance.OutlookVersion } });
@@ -230,7 +229,6 @@ namespace OutlookGoogleCalendarSync {
                 public enum Name {
                     application_started,
                     debug,
-                    donate,
                     ogcs_error,
                     setting,
                     squirrel,
@@ -335,7 +333,6 @@ namespace OutlookGoogleCalendarSync {
                     payload = "{ \"usernameId\": \"" + Telemetry.Instance.uuId + "\", " +
                         "\"version\": \"" + Program.VersionToInt(System.Windows.Forms.Application.ProductVersion) + "\", " +
                         "\"country\": \"" + Telemetry.Instance.Country + "\", " +
-                        "\"isBenefactor\": \"" + Settings.Instance.UserIsBenefactor() + "\", " +
                         "\"profiles\": \"" + Settings.Instance.Calendars.Count() + "\", " +
                         "\"outlookOnline\": \"" + Settings.Instance.Calendars.Count(c => c.OutlookService == Outlook.Calendar.Service.Graph)
                         + "\" }";

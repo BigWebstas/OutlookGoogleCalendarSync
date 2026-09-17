@@ -59,10 +59,6 @@ namespace OutlookGoogleCalendarSync {
         private String version;
         private String skipVersion;
         private String skipVersion2;
-        private Boolean donor;
-        private DateTime subscribed;
-        private bool? hideSplashScreen;
-        private Boolean suppressSocialPopup;
         private bool? cloudLogging;
 
         private Settings() {
@@ -114,10 +110,6 @@ namespace OutlookGoogleCalendarSync {
             alphaReleases = !System.Windows.Forms.Application.ProductVersion.EndsWith("0.0");
             SkipVersion = null;
             SkipVersion2 = null;
-            subscribed = Ogcs.Google.Authenticator.SubscribedNever;
-            donor = false;
-            hideSplashScreen = null;
-            suppressSocialPopup = false;
 
             completedSyncs = 0;
             VerboseOutput = true;
@@ -217,25 +209,6 @@ namespace OutlookGoogleCalendarSync {
         }
         #endregion
         #region App behaviour
-        [DataMember] public bool? HideSplashScreen {
-            get { return hideSplashScreen; }
-            set {
-                if (!Loading() && hideSplashScreen != value && value != null) {
-                    XMLManager.ExportElement(this, "HideSplashScreen", value, ConfigFile);
-                }
-                hideSplashScreen = value;
-            }
-        }
-
-        [DataMember] public bool SuppressSocialPopup {
-            get { return suppressSocialPopup; }
-            set {
-                if (!Loading() && suppressSocialPopup != value) {
-                    XMLManager.ExportElement(this, "SuppressSocialPopup", value, ConfigFile);
-                }
-                suppressSocialPopup = value;
-            }
-        }
         [DataMember] public DateTime HideNews { get; set; }
         [DataMember] public bool ShowSystemNotifications { get; set; }
         [DataMember] public bool ShowSystemNotificationsIfChange { get; set; }
@@ -286,23 +259,6 @@ namespace OutlookGoogleCalendarSync {
             set {
                 alphaReleases = value;
                 if (!Loading()) XMLManager.ExportElement(this, "AlphaReleases", value, ConfigFile);
-            }
-        }
-        public Boolean UserIsBenefactor() {
-            return Subscribed != Ogcs.Google.Authenticator.SubscribedNever || donor;
-        }
-        [DataMember] public DateTime Subscribed {
-            get { return subscribed; }
-            set {
-                subscribed = value;
-                if (!Loading()) XMLManager.ExportElement(this, "Subscribed", value, ConfigFile);
-            }
-        }
-        [DataMember] public Boolean Donor {
-            get { return donor; }
-            set {
-                donor = value;
-                if (!Loading()) XMLManager.ExportElement(this, "Donor", value, ConfigFile);
             }
         }
         #endregion
@@ -462,8 +418,6 @@ namespace OutlookGoogleCalendarSync {
             log.Info("APPLICATION BEHAVIOUR:-");
             log.Info("  ShowSystemNotifications: " + ShowSystemNotifications + "; OnlyIfChange: " + ShowSystemNotificationsIfChange);
             log.Info("  StartOnStartup: " + StartOnStartup + "; AllUsers: " + StartOnStartupAllUsers + "; DelayedStartup: " + StartupDelay.ToString());
-            log.Info("  HideSplashScreen: " + (UserIsBenefactor() ? HideSplashScreen.ToString() : "N/A"));
-            log.Info("  SuppressSocialPopup: " + (UserIsBenefactor() ? SuppressSocialPopup.ToString() : "N/A"));
             log.Info("  StartInTray: " + StartInTray);
             log.Info("  MinimiseToTray: " + MinimiseToTray);
             log.Info("  MinimiseNotClose: " + MinimiseNotClose);
@@ -484,7 +438,6 @@ namespace OutlookGoogleCalendarSync {
             log.Info("  Alpha Releases: " + alphaReleases);
             log.Info("  Skip Version: " + SkipVersion);
             log.Info("  Skip Version2: " + SkipVersion2);
-            log.Info("  Subscribed: " + Subscribed.ToString("dd-MMM-yyyy"));
             log.Info("  Timezone Database: " + TimezoneDB.Instance.Version);
             
             log.Info("ENVIRONMENT:-");

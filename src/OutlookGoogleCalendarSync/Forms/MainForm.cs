@@ -65,9 +65,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             if (((Sync.Engine.Instance.NextSyncDate ?? DateTime.Now.AddMinutes(10)) - DateTime.Now).TotalMinutes > 5) {
                 Outlook.Calendar.Disconnect(onlyWhenNoGUI: true);
             }
-            while (!Forms.Splash.BeenAndGone) {
-                System.Threading.Thread.Sleep(100);
-            }
             if (!Settings.Instance.StartInTray)
                 this.MainFormShow(true);
         }
@@ -146,10 +143,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             ToolTips.SetToolTip(cbStartOnStartup, "Start OGCS when current Windows user logs in.");
             ToolTips.SetToolTip(tbStartupDelay, "Try setting a delay if COM errors occur on startup.");
             ToolTips.SetToolTip(cbStartOnStartupAllUsers, "Also try this if 'current user' isn't effective.");
-            if (!Settings.Instance.UserIsBenefactor()) {
-                ToolTips.SetToolTip(cbHideSplash, "Donate £10 or more to enable this feature.");
-                ToolTips.SetToolTip(cbSuppressSocialPopup, "Donate £10 or more to enable this feature.");
-            }
             ToolTips.SetToolTip(cbPortable,
                 "For ZIP deployments, store configuration files in the application folder (useful if running from a USB thumb drive).\n" +
                 "Default is in your User roaming profile.");
@@ -225,8 +218,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             cbStartOnStartupAllUsers.Checked = Settings.Instance.StartOnStartupAllUsers;
             tbStartupDelay.Value = Settings.Instance.StartupDelay;
             tbStartupDelay.Enabled = cbStartOnStartup.Checked;
-            cbHideSplash.Checked = Settings.Instance.HideSplashScreen ?? false;
-            cbSuppressSocialPopup.Checked = Settings.Instance.SuppressSocialPopup;
             cbStartInTray.Checked = Settings.Instance.StartInTray;
             cbMinimiseToTray.Checked = Settings.Instance.MinimiseToTray;
             cbMinimiseNotClose.Checked = Settings.Instance.MinimiseNotClose;
@@ -258,9 +249,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             dgAbout.Rows.Add(); r++;
             dgAbout.Rows[r].Cells[0].Value = "Config In";
             dgAbout.Rows[r].Cells[1].Value = Settings.ConfigFile;
-            dgAbout.Rows.Add(); r++;
-            dgAbout.Rows[r].Cells[0].Value = "Subscription";
-            dgAbout.Rows[r].Cells[1].Value = (Settings.Instance.Subscribed <= Ogcs.Google.Authenticator.SubscribedBefore) ? "N/A" : Settings.Instance.Subscribed.ToShortDateString();
             dgAbout.Rows.Add(); r++;
             dgAbout.Rows[r].Cells[0].Value = "Timezone DB";
             dgAbout.Rows[r].Cells[1].Value = TimezoneDB.Instance.Version;
@@ -779,9 +767,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             DailyQuotaExhaustedPreviously,
             QuotaExceededInfo,
             QuotaExceededPreviously,
-            RecentSubscription,
-            SubscriptionPendingExpire,
-            SubscriptionExpired,
             NotLogFile
         }
         public void SyncNote(SyncNotes syncNote, Object extraData, Boolean show = true) {
@@ -789,7 +774,6 @@ namespace OutlookGoogleCalendarSync.Forms {
 
             String note = "";
             String url = "";
-            String urlStub = Program.OgcsWebsite + "/subscribe";
             String cr = "\r\n";
 
             if (syncNote == SyncNotes.DailyQuotaExhaustedInfo && !show && this.tbSyncNote.Text.Contains("quota is exhausted")) {
@@ -804,9 +788,7 @@ namespace OutlookGoogleCalendarSync.Forms {
             switch (syncNote) {
                 case SyncNotes.DailyQuotaExhaustedInfo:
                     note = "  Google's daily free calendar quota is exhausted!" + cr +
-                            "     Either wait for new quota at 08:00GMT or     " + cr +
-                            "  get yourself guaranteed quota for just £1/month.";
-                    url = urlStub + "?id=" + Ogcs.Extensions.OgcsString.ToBase64String("OGCS Premium for " + Settings.Instance.GaccountEmail);
+                            "          Wait for new quota at 08:00GMT.         ";
                     break;
 
                 case SyncNotes.DailyQuotaExhaustedPreviously:
@@ -825,9 +807,7 @@ namespace OutlookGoogleCalendarSync.Forms {
                         delay = (int)(DateTime.Now - ActiveCalendarProfile.LastSyncDate).TotalMinutes + " mins";
                     }
                     note = "Google's daily free calendar quota was exhausted!" + cr +
-                            "    Previous successful sync was " + delay + " ago." + cr +
-                            " Get yourself guaranteed quota for just £1/month.";
-                    url = urlStub + "?id=" + Ogcs.Extensions.OgcsString.ToBase64String("OGCS Premium for " + Settings.Instance.GaccountEmail);
+                            "    Previous successful sync was " + delay + " ago.  ";
 
                     if (!show && existingNote.Contains("free calendar quota was exhausted")) {
                         log.Debug("Removing quota exhausted advisory notice.");
@@ -857,9 +837,7 @@ namespace OutlookGoogleCalendarSync.Forms {
 
                 case SyncNotes.QuotaExceededInfo:
                     note = "  Google's free calendar quota is being exceeded! " + cr +
-                            "     Either wait for new quota or get yourself    " + cr +
-                            "         guaranteed quota for just £1/month.      ";
-                    url = urlStub + "?id=" + Ogcs.Extensions.OgcsString.ToBase64String("OGCS Premium for " + Settings.Instance.GaccountEmail);
+                            "          Please wait for quota to reset.         ";
                     break;
 
                 case SyncNotes.QuotaExceededPreviously:
@@ -869,9 +847,7 @@ namespace OutlookGoogleCalendarSync.Forms {
                         delay = (int)(DateTime.Now - ActiveCalendarProfile.LastSyncDate).TotalMinutes + " mins";
                     }
                     note = "    Google's free calendar quota was exceeded!    " + cr +
-                            "      Previous successful sync was " + delay + " ago." + cr +
-                            " Get yourself guaranteed quota for just £1/month.";
-                    url = urlStub + "?id=" + Ogcs.Extensions.OgcsString.ToBase64String("OGCS Premium for " + Settings.Instance.GaccountEmail);
+                            "      Previous successful sync was " + delay + " ago.  ";
 
                     if (!show && existingNote.Contains("free calendar quota was exceeded")) {
                         log.Debug("Removing quota exceeded advisory notice.");
@@ -897,31 +873,6 @@ namespace OutlookGoogleCalendarSync.Forms {
                             });
                         bwHideNote.RunWorkerAsync();
                     }
-                    break;
-
-                case SyncNotes.RecentSubscription:
-                    note = "                                                  " + cr +
-                            "   Thank you for your subscription and support!   " + cr +
-                            "                                                  ";
-                    break;
-
-                case SyncNotes.SubscriptionPendingExpire:
-                    DateTime expiration = (DateTime)extraData;
-                    note = "  Your annual subscription for guaranteed quota   " + cr +
-                            "  for Google calendar usage is expiring on " + expiration.ToString("dd-MMM") + "." + cr +
-                            "         Click to renew for just £1/month.        ";
-                    url = urlStub + "?id=" + 
-                        Ogcs.Extensions.OgcsString.ToBase64String("OGCS Premium renewal from " + 
-                        expiration.ToString("dd-MMM-yy", new System.Globalization.CultureInfo("en-US")) +
-                        " for " + Settings.Instance.GaccountEmail);
-                    break;
-
-                case SyncNotes.SubscriptionExpired:
-                    expiration = (DateTime)extraData;
-                    note = "  Your annual subscription for guaranteed quota   " + cr +
-                            "    for Google calendar usage expired on " + expiration.ToString("dd-MMM") + "." + cr +
-                            "         Click to renew for just £1/month.        ";
-                    url = urlStub + "?id=" + Ogcs.Extensions.OgcsString.ToBase64String("OGCS Premium renewal for " + Settings.Instance.GaccountEmail);
                     break;
 
                 case SyncNotes.NotLogFile:
@@ -1106,23 +1057,7 @@ namespace OutlookGoogleCalendarSync.Forms {
 
         private void tbSyncNote_Click(object sender, EventArgs e) {
             if (!String.IsNullOrEmpty(tbSyncNote.Tag.ToString())) {
-                if (tbSyncNote.Tag.ToString().EndsWith("for ")) {
-                    log.Info("User wanted to subscribe, but Google account username is not known :(");
-                    DialogResult authorise = Ogcs.Extensions.MessageBox.Show("Thank you for your interest in subscribing. " +
-                       "To kick things off, you'll need to re-authorise OGCS to manage your Google calendar. " +
-                       "Would you like to do that now?", "Proceed with authorisation?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (authorise == DialogResult.Yes) {
-                        log.Debug("Resetting Google account access.");
-                        Ogcs.Google.Calendar.Instance.Authenticator.Reset();
-                        Ogcs.Google.Calendar.Instance.Authenticator.UserSubscriptionCheck();
-                    }
-                } else {
-                    if (tbSyncNote.Tag.ToString().Contains("OGCS Premium renewal")) {
-                        Ogcs.Extensions.MessageBox.Show("Before renewing, please ensure you don't already have an active recurring annual payment set up in PayPal :-)",
-                            "Recurring payment already configured?", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    Helper.OpenBrowser(tbSyncNote.Tag.ToString());
-                }
+                Helper.OpenBrowser(tbSyncNote.Tag.ToString());
             }
         }
         #endregion
@@ -2669,29 +2604,6 @@ namespace OutlookGoogleCalendarSync.Forms {
         }
 
 
-        private void cbHideSplash_CheckedChanged(object sender, EventArgs e) {
-            if (Settings.Instance.UserIsBenefactor()) {
-                Settings.Instance.HideSplashScreen = cbHideSplash.Checked;
-            } else {
-                cbHideSplash.CheckedChanged -= cbHideSplash_CheckedChanged;
-                cbHideSplash.Checked = false;
-                cbHideSplash.CheckedChanged += cbHideSplash_CheckedChanged;
-                ToolTips.SetToolTip(cbHideSplash, "Donate £10 or more to enable this feature.");
-                ToolTips.Show(ToolTips.GetToolTip(cbHideSplash), cbHideSplash, 5000);
-                Settings.Instance.HideSplashScreen = null;
-            }
-        }
-
-        private void cbSuppressSocialPopup_CheckedChanged(object sender, EventArgs e) {
-            if (!Settings.Instance.UserIsBenefactor()) {
-                cbSuppressSocialPopup.CheckedChanged -= cbSuppressSocialPopup_CheckedChanged;
-                cbSuppressSocialPopup.Checked = false;
-                cbSuppressSocialPopup.CheckedChanged += cbSuppressSocialPopup_CheckedChanged;
-                ToolTips.SetToolTip(cbSuppressSocialPopup, "Donate £10 or more to enable this feature.");
-            }
-            Settings.Instance.SuppressSocialPopup = cbSuppressSocialPopup.Checked;
-        }
-
         private void cbShowSystemNotifications_CheckedChanged(object sender, EventArgs e) {
             Settings.Instance.ShowSystemNotifications = cbShowSystemNotifications.Checked;
             if (!cbShowSystemNotifications.Checked) cbShowSystemNotificationsIfChange.Checked = false;
@@ -2859,10 +2771,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             Helper.OpenBrowser(lAboutURL.Text);
         }
 
-        private void pbDonate_Click(object sender, EventArgs e) {
-            Program.Donate("About");
-        }
-
         private void btCheckForUpdate_Click(object sender, EventArgs e) {
             Program.Updater.CheckForUpdate(btCheckForUpdate);
         }
@@ -2922,61 +2830,5 @@ namespace OutlookGoogleCalendarSync.Forms {
         }
         #endregion
 
-        #region Social Media
-        public void CheckSyncMilestone() {
-            try {
-                if (Settings.Instance.SuppressSocialPopup && Settings.Instance.UserIsBenefactor()) return;
-
-                Boolean isMilestone = false;
-                Int32 syncs = Settings.Instance.CompletedSyncs;
-                String blurb = "You've completed " + String.Format("{0:n0}", syncs) + " syncs! Why not let people know how useful this tool is...";
-
-                lMilestone.Text = String.Format("{0:n0}", syncs) + " Syncs!";
-                lMilestoneBlurb.Text = blurb;
-
-                switch (syncs) {
-                    case 10: isMilestone = true; break;
-                    case 100: isMilestone = true; break;
-                    case 250: isMilestone = true; break;
-                    case 500: isMilestone = true; break;
-                    case 1000: isMilestone = true; break;
-                    case 5000: isMilestone = true; break;
-                    case 10000: isMilestone = true; break;
-                }
-                if (isMilestone) {
-                    new Forms.Social().ShowDialog();
-                }
-            } catch (System.Exception ex) {
-                log.Warn("Failed checking sync milestone.");
-                Ogcs.Exception.Analyse(ex);
-            }
-        }
-
-        private void btSocialSkeet_Click(object sender, EventArgs e) {
-            Social.Bluesky_skeet();
-        }
-        private void pbSocialBlueskyFollow_Click(object sender, EventArgs e) {
-            Social.Bluesky_follow();
-        }
-
-        private void btSocialFB_Click(object sender, EventArgs e) {
-            Social.Facebook_share();
-        }
-        private void btFbLike_Click(object sender, EventArgs e) {
-            Social.Facebook_like();
-        }
-
-        private void btSocialLinkedin_Click(object sender, EventArgs e) {
-            Social.Linkedin_share();
-        }
-
-        private void btSocialRSSfeed_Click(object sender, EventArgs e) {
-            Social.RSS_follow();
-        }
-
-        private void btSocialGitHub_Click(object sender, EventArgs e) {
-            Social.GitHub();
-        }
-        #endregion
     }
 }

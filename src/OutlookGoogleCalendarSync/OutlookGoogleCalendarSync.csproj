@@ -469,12 +469,6 @@
     <Compile Include="Forms\ProfileManage.Designer.cs">
       <DependentUpon>ProfileManage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Social.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Social.Designer.cs">
-      <DependentUpon>Social.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ColourMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -710,12 +704,6 @@
     <Compile Include="TimezoneDB.cs" />
     <Compile Include="Obfuscate.cs" />
     <Compile Include="Telemetry.cs" />
-    <Compile Include="Forms\Splash.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Splash.Designer.cs">
-      <DependentUpon>Splash.cs</DependentUpon>
-    </Compile>
     <Compile Include="Extensions\ILogExtension.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -750,10 +738,6 @@
     <EmbeddedResource Include="Forms\ProfileManage.resx">
       <DependentUpon>ProfileManage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Social.resx">
-      <DependentUpon>Social.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ColourMap.resx">
       <DependentUpon>ColourMap.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -773,10 +757,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Splash.resx">
-      <DependentUpon>Splash.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -946,7 +926,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\ogcs.png" />
-    <None Include="Resources\paypalDonate.gif" />
   </ItemGroup>
   <ItemGroup>
     <!-- Pulls the metadata for the compiler, matching the local 10.0.26100 SDK, but guarantees 0 bytes are added to your output folder -->

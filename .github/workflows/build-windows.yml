@@ -1,0 +1,93 @@
+name: Build Windows app & installer
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (e.g. 3.0.4-alpha). Leave blank to auto-detect from the nuspec, or the pushed tag.'
+        required: false
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Determine version
+        shell: pwsh
+        run: |
+          $version = "${{ inputs.version }}"
+          if ([string]::IsNullOrWhiteSpace($version)) {
+            if ("${{ github.ref }}" -like 'refs/tags/*') {
+              $version = "${{ github.ref_name }}" -replace '^v', ''
+            } else {
+              [xml]$nuspec = Get-Content 'src\OutlookGoogleCalendarSync\OutlookGoogleCalendarSync.nuspec'
+              $version = $nuspec.package.metadata.version
+            }
+          }
+          $zipVersion = $version -replace '-.*', ''
+          "VERSION=$version" >> $env:GITHUB_ENV
+          "ZIP_VERSION=$zipVersion" >> $env:GITHUB_ENV
+          Write-Host "Building version $version (portable zip version $zipVersion)"
+
+      - name: Restore NuGet packages
+        shell: pwsh
+        run: .\nuget.exe restore src\OutlookGoogleCalendarSync.sln
+
+      - name: Build standalone app
+        shell: pwsh
+        run: msbuild src\OutlookGoogleCalendarSync\OutlookGoogleCalendarSync.csproj /p:Configuration=Release /p:Platform=AnyCPU /m /v:minimal
+
+      - name: Pack NuGet package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path 'src\Releases' -Force | Out-Null
+          .\nuget.exe pack src\OutlookGoogleCalendarSync\OutlookGoogleCalendarSync.nuspec -Version $env:VERSION -OutputDirectory src\Releases
+
+      - name: Build installer (Squirrel)
+        shell: pwsh
+        run: |
+          $squirrel = Get-ChildItem -Path 'src\packages' -Filter 'Squirrel.exe' -Recurse | Select-Object -First 1
+          if (-not $squirrel) { throw "Squirrel.exe not found - did NuGet restore the squirrel.windows package?" }
+          & $squirrel.FullName --releasify "src\Releases\OutlookGoogleCalendarSync.$env:VERSION.nupkg" --no-msi --loadingGif "docs\images\ogcs128x128-animated.gif" --releaseDir "src\Releases"
+          Rename-Item -Path 'src\Releases\Setup.exe' -NewName 'OGCS_Setup.exe'
+
+      - name: Build portable ZIP
+        shell: pwsh
+        run: |
+          $build = 'src\OutlookGoogleCalendarSync\bin\Release-v3'
+          $stage = 'stage\portable'
+          New-Item -ItemType Directory -Path $stage -Force | Out-Null
+          Copy-Item "$build\*.dll" $stage
+          Copy-Item "$build\*.ps1" $stage
+          Copy-Item "$build\ErrorReportingTemplate.json" $stage
+          Copy-Item "$build\logger.xml" $stage
+          Copy-Item "$build\tzdb.nzd" $stage
+          Copy-Item "$build\OutlookGoogleCalendarSync.exe" $stage
+          Copy-Item "$build\OutlookGoogleCalendarSync.exe.config" $stage
+          Copy-Item "$build\OutlookGoogleCalendarSync.pdb" $stage
+          Copy-Item "$build\Console" "$stage\Console" -Recurse
+          Compress-Archive -Path "$stage\*" -DestinationPath "Portable_OGCS_v$($env:ZIP_VERSION).zip"
+
+      - name: Upload portable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Portable_OGCS_v${{ env.ZIP_VERSION }}
+          path: Portable_OGCS_v${{ env.ZIP_VERSION }}.zip
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: OGCS_Setup_v${{ env.VERSION }}
+          path: |
+            src\Releases\OGCS_Setup.exe
+            src\Releases\RELEASES
+            src\Releases\*.nupkg

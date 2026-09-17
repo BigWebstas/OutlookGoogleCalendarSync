@@ -242,7 +242,6 @@
             this.tabAppBehaviour = new System.Windows.Forms.TabPage();
             this.cbShowSystemNotificationsIfChange = new System.Windows.Forms.CheckBox();
             this.cbStartOnStartupAllUsers = new System.Windows.Forms.CheckBox();
-            this.cbSuppressSocialPopup = new System.Windows.Forms.CheckBox();
             this.panelAppBehaviour = new System.Windows.Forms.Panel();
             this.pbExpandProxy = new System.Windows.Forms.PictureBox();
             this.gbAppBehaviour_Proxy = new System.Windows.Forms.GroupBox();
@@ -271,7 +270,6 @@
             this.cbLoggingLevel = new System.Windows.Forms.ComboBox();
             this.cbCreateFiles = new System.Windows.Forms.CheckBox();
             this.tbStartupDelay = new System.Windows.Forms.NumericUpDown();
-            this.cbHideSplash = new System.Windows.Forms.CheckBox();
             this.cbMinimiseNotClose = new System.Windows.Forms.CheckBox();
             this.cbPortable = new System.Windows.Forms.CheckBox();
             this.cbShowSystemNotifications = new System.Windows.Forms.CheckBox();
@@ -306,7 +304,6 @@
             this.tbTS0 = new System.Windows.Forms.TextBox();
             this.tabPage_About = new System.Windows.Forms.TabPage();
             this.cbIgnoreSkipPrefs = new System.Windows.Forms.CheckBox();
-            this.lDonateTip = new System.Windows.Forms.Label();
             this.dgAbout = new System.Windows.Forms.DataGridView();
             this.AboutColumnLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AboutColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -316,24 +313,6 @@
             this.lAboutURL = new System.Windows.Forms.LinkLabel();
             this.lAboutMain = new System.Windows.Forms.Label();
             this.GappBrowser = new System.Windows.Forms.WebBrowser();
-            this.pbDonate = new System.Windows.Forms.PictureBox();
-            this.tabPage_Social = new System.Windows.Forms.TabPage();
-            this.label33 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.lMilestoneBlurb = new System.Windows.Forms.Label();
-            this.btSocialSkeet = new System.Windows.Forms.Button();
-            this.lMilestone = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.pbSocialBlueSkyFollow = new System.Windows.Forms.PictureBox();
-            this.btSocialLinkedin = new System.Windows.Forms.Button();
-            this.btSocialRSSfeed = new System.Windows.Forms.Button();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.btSocialFB = new System.Windows.Forms.Button();
-            this.btSocialGitHub = new System.Windows.Forms.Button();
-            this.btFbLike = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pbSocialDonate = new System.Windows.Forms.PictureBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -399,11 +378,6 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.tabPage_About.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgAbout)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDonate)).BeginInit();
-            this.tabPage_Social.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSocialBlueSkyFollow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSocialDonate)).BeginInit();
             this.SuspendLayout();
             // 
             // tabApp
@@ -415,7 +389,6 @@
             this.tabApp.Controls.Add(this.tabPage_Settings);
             this.tabApp.Controls.Add(this.tabPage_Help);
             this.tabApp.Controls.Add(this.tabPage_About);
-            this.tabApp.Controls.Add(this.tabPage_Social);
             this.tabApp.Location = new System.Drawing.Point(12, 12);
             this.tabApp.Multiline = true;
             this.tabApp.Name = "tabApp";
@@ -2987,10 +2960,8 @@
             this.tabAppBehaviour.BackColor = System.Drawing.Color.White;
             this.tabAppBehaviour.Controls.Add(this.cbShowSystemNotificationsIfChange);
             this.tabAppBehaviour.Controls.Add(this.cbStartOnStartupAllUsers);
-            this.tabAppBehaviour.Controls.Add(this.cbSuppressSocialPopup);
             this.tabAppBehaviour.Controls.Add(this.panelAppBehaviour);
             this.tabAppBehaviour.Controls.Add(this.tbStartupDelay);
-            this.tabAppBehaviour.Controls.Add(this.cbHideSplash);
             this.tabAppBehaviour.Controls.Add(this.cbMinimiseNotClose);
             this.tabAppBehaviour.Controls.Add(this.cbPortable);
             this.tabAppBehaviour.Controls.Add(this.cbShowSystemNotifications);
@@ -3023,19 +2994,7 @@
             this.cbStartOnStartupAllUsers.Text = "for all users";
             this.cbStartOnStartupAllUsers.UseVisualStyleBackColor = true;
             this.cbStartOnStartupAllUsers.CheckedChanged += new System.EventHandler(this.cbStartOnStartupAllUsers_CheckedChanged);
-            // 
-            // cbSuppressSocialPopup
-            // 
-            this.cbSuppressSocialPopup.AutoSize = true;
-            this.cbSuppressSocialPopup.Location = new System.Drawing.Point(179, 35);
-            this.cbSuppressSocialPopup.Margin = new System.Windows.Forms.Padding(4);
-            this.cbSuppressSocialPopup.Name = "cbSuppressSocialPopup";
-            this.cbSuppressSocialPopup.Size = new System.Drawing.Size(197, 17);
-            this.cbSuppressSocialPopup.TabIndex = 46;
-            this.cbSuppressSocialPopup.Text = "Suppress \"spread the word\" popups";
-            this.cbSuppressSocialPopup.UseVisualStyleBackColor = true;
-            this.cbSuppressSocialPopup.CheckedChanged += new System.EventHandler(this.cbSuppressSocialPopup_CheckedChanged);
-            // 
+            //
             // panelAppBehaviour
             // 
             this.panelAppBehaviour.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -3425,18 +3384,7 @@
             this.tbStartupDelay.Size = new System.Drawing.Size(42, 20);
             this.tbStartupDelay.TabIndex = 41;
             this.tbStartupDelay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // cbHideSplash
-            // 
-            this.cbHideSplash.AutoSize = true;
-            this.cbHideSplash.Location = new System.Drawing.Point(56, 35);
-            this.cbHideSplash.Name = "cbHideSplash";
-            this.cbHideSplash.Size = new System.Drawing.Size(116, 17);
-            this.cbHideSplash.TabIndex = 40;
-            this.cbHideSplash.Text = "Hide splash screen";
-            this.cbHideSplash.UseVisualStyleBackColor = true;
-            this.cbHideSplash.CheckedChanged += new System.EventHandler(this.cbHideSplash_CheckedChanged);
-            // 
+            //
             // cbMinimiseNotClose
             // 
             this.cbMinimiseNotClose.Location = new System.Drawing.Point(56, 89);
@@ -3826,7 +3774,6 @@
             // 
             this.tabPage_About.BackColor = System.Drawing.Color.White;
             this.tabPage_About.Controls.Add(this.cbIgnoreSkipPrefs);
-            this.tabPage_About.Controls.Add(this.lDonateTip);
             this.tabPage_About.Controls.Add(this.dgAbout);
             this.tabPage_About.Controls.Add(this.cbAlphaReleases);
             this.tabPage_About.Controls.Add(this.btCheckForUpdate);
@@ -3834,7 +3781,6 @@
             this.tabPage_About.Controls.Add(this.lAboutURL);
             this.tabPage_About.Controls.Add(this.lAboutMain);
             this.tabPage_About.Controls.Add(this.GappBrowser);
-            this.tabPage_About.Controls.Add(this.pbDonate);
             this.tabPage_About.Location = new System.Drawing.Point(4, 22);
             this.tabPage_About.Name = "tabPage_About";
             this.tabPage_About.Padding = new System.Windows.Forms.Padding(3);
@@ -3854,18 +3800,6 @@
             this.cbIgnoreSkipPrefs.TabIndex = 47;
             this.cbIgnoreSkipPrefs.Text = "Consider versions previously skipped";
             this.cbIgnoreSkipPrefs.UseVisualStyleBackColor = true;
-            // 
-            // lDonateTip
-            // 
-            this.lDonateTip.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lDonateTip.AutoSize = true;
-            this.lDonateTip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lDonateTip.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lDonateTip.Location = new System.Drawing.Point(154, 396);
-            this.lDonateTip.Name = "lDonateTip";
-            this.lDonateTip.Size = new System.Drawing.Size(177, 13);
-            this.lDonateTip.TabIndex = 46;
-            this.lDonateTip.Text = "£10 or more hides the splash screen";
             // 
             // dgAbout
             // 
@@ -3978,274 +3912,9 @@
             this.GappBrowser.Size = new System.Drawing.Size(250, 51);
             this.GappBrowser.TabIndex = 45;
             this.GappBrowser.Visible = false;
-            // 
-            // pbDonate
-            // 
-            this.pbDonate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbDonate.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDonate.Image = global::OutlookGoogleCalendarSync.Properties.Resources.paypalDonate;
-            this.pbDonate.Location = new System.Drawing.Point(205, 370);
-            this.pbDonate.Name = "pbDonate";
-            this.pbDonate.Size = new System.Drawing.Size(75, 23);
-            this.pbDonate.TabIndex = 3;
-            this.pbDonate.TabStop = false;
-            this.pbDonate.Click += new System.EventHandler(this.pbDonate_Click);
-            // 
-            // tabPage_Social
-            // 
-            this.tabPage_Social.BackColor = System.Drawing.Color.White;
-            this.tabPage_Social.Controls.Add(this.label33);
-            this.tabPage_Social.Controls.Add(this.tableLayoutPanel2);
-            this.tabPage_Social.Controls.Add(this.label2);
-            this.tabPage_Social.Controls.Add(this.pbSocialDonate);
-            this.tabPage_Social.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_Social.Name = "tabPage_Social";
-            this.tabPage_Social.Size = new System.Drawing.Size(487, 580);
-            this.tabPage_Social.TabIndex = 4;
-            this.tabPage_Social.Text = "Socialise";
-            // 
-            // label33
-            // 
-            this.label33.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label33.AutoSize = true;
-            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label33.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label33.Location = new System.Drawing.Point(149, 71);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(177, 13);
-            this.label33.TabIndex = 47;
-            this.label33.Text = "£10 or more hides the splash screen";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.lMilestoneBlurb, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btSocialSkeet, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.lMilestone, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label30, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.pbSocialBlueSkyFollow, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.btSocialLinkedin, 0, 5);
-            this.tableLayoutPanel2.Controls.Add(this.btSocialRSSfeed, 0, 6);
-            this.tableLayoutPanel2.Controls.Add(this.label29, 1, 6);
-            this.tableLayoutPanel2.Controls.Add(this.label26, 1, 7);
-            this.tableLayoutPanel2.Controls.Add(this.btSocialFB, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.btSocialGitHub, 0, 7);
-            this.tableLayoutPanel2.Controls.Add(this.btFbLike, 1, 4);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(99, 118);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 9;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(301, 357);
-            this.tableLayoutPanel2.TabIndex = 39;
-            // 
-            // lMilestoneBlurb
-            // 
-            this.lMilestoneBlurb.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lMilestoneBlurb.AutoSize = true;
-            this.lMilestoneBlurb.Location = new System.Drawing.Point(103, 5);
-            this.lMilestoneBlurb.MaximumSize = new System.Drawing.Size(169, 39);
-            this.lMilestoneBlurb.Name = "lMilestoneBlurb";
-            this.lMilestoneBlurb.Size = new System.Drawing.Size(169, 39);
-            this.lMilestoneBlurb.TabIndex = 41;
-            this.lMilestoneBlurb.Text = "Let others know you\'ve found this application by sharing through your favourite s" +
-    "ocial media site below!";
-            // 
-            // btSocialSkeet
-            // 
-            this.btSocialSkeet.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btSocialSkeet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btSocialSkeet.FlatAppearance.BorderSize = 0;
-            this.btSocialSkeet.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btSocialSkeet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSocialSkeet.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btSocialSkeet.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.btSocialSkeet.Image = global::OutlookGoogleCalendarSync.Properties.Resources.bluesky;
-            this.btSocialSkeet.Location = new System.Drawing.Point(7, 98);
-            this.btSocialSkeet.Name = "btSocialSkeet";
-            this.btSocialSkeet.Size = new System.Drawing.Size(86, 34);
-            this.btSocialSkeet.TabIndex = 0;
-            this.btSocialSkeet.Text = "BlueSky   ";
-            this.btSocialSkeet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btSocialSkeet.UseVisualStyleBackColor = true;
-            this.btSocialSkeet.Click += new System.EventHandler(this.btSocialSkeet_Click);
-            // 
-            // lMilestone
-            // 
-            this.lMilestone.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lMilestone.AutoSize = true;
-            this.lMilestone.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lMilestone.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.lMilestone.Location = new System.Drawing.Point(4, 17);
-            this.lMilestone.Name = "lMilestone";
-            this.lMilestone.Size = new System.Drawing.Size(91, 15);
-            this.lMilestone.TabIndex = 40;
-            this.lMilestone.Text = "Frequent User";
-            this.lMilestone.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label30
-            // 
-            this.label30.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.label30.Location = new System.Drawing.Point(29, 72);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(41, 15);
-            this.label30.TabIndex = 52;
-            this.label30.Text = "Share";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // pbSocialBlueSkyFollow
-            // 
-            this.pbSocialBlueSkyFollow.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pbSocialBlueSkyFollow.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSocialBlueSkyFollow.Image = global::OutlookGoogleCalendarSync.Properties.Resources.bluesky_follow;
-            this.pbSocialBlueSkyFollow.Location = new System.Drawing.Point(103, 101);
-            this.pbSocialBlueSkyFollow.Name = "pbSocialBlueSkyFollow";
-            this.pbSocialBlueSkyFollow.Size = new System.Drawing.Size(135, 27);
-            this.pbSocialBlueSkyFollow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbSocialBlueSkyFollow.TabIndex = 53;
-            this.pbSocialBlueSkyFollow.TabStop = false;
-            this.pbSocialBlueSkyFollow.Click += new System.EventHandler(this.pbSocialBlueskyFollow_Click);
-            // 
-            // btSocialLinkedin
-            // 
-            this.btSocialLinkedin.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btSocialLinkedin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btSocialLinkedin.FlatAppearance.BorderSize = 0;
-            this.btSocialLinkedin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btSocialLinkedin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSocialLinkedin.Image = global::OutlookGoogleCalendarSync.Properties.Resources.linkedin;
-            this.btSocialLinkedin.Location = new System.Drawing.Point(7, 198);
-            this.btSocialLinkedin.Name = "btSocialLinkedin";
-            this.btSocialLinkedin.Size = new System.Drawing.Size(86, 34);
-            this.btSocialLinkedin.TabIndex = 50;
-            this.btSocialLinkedin.UseVisualStyleBackColor = true;
-            this.btSocialLinkedin.Click += new System.EventHandler(this.btSocialLinkedin_Click);
-            // 
-            // btSocialRSSfeed
-            // 
-            this.btSocialRSSfeed.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btSocialRSSfeed.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btSocialRSSfeed.FlatAppearance.BorderSize = 0;
-            this.btSocialRSSfeed.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btSocialRSSfeed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSocialRSSfeed.Image = global::OutlookGoogleCalendarSync.Properties.Resources.rssfeed;
-            this.btSocialRSSfeed.Location = new System.Drawing.Point(7, 248);
-            this.btSocialRSSfeed.Name = "btSocialRSSfeed";
-            this.btSocialRSSfeed.Size = new System.Drawing.Size(86, 34);
-            this.btSocialRSSfeed.TabIndex = 46;
-            this.btSocialRSSfeed.UseVisualStyleBackColor = true;
-            this.btSocialRSSfeed.Click += new System.EventHandler(this.btSocialRSSfeed_Click);
-            // 
-            // label29
-            // 
-            this.label29.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(103, 258);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(182, 13);
-            this.label29.TabIndex = 49;
-            this.label29.Text = "See new versions as they\'re released";
-            // 
-            // label26
-            // 
-            this.label26.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(103, 308);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(157, 13);
-            this.label26.TabIndex = 69;
-            this.label26.Text = "Participate in the GitHub project";
-            // 
-            // btSocialFB
-            // 
-            this.btSocialFB.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btSocialFB.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btSocialFB.FlatAppearance.BorderSize = 0;
-            this.btSocialFB.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btSocialFB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSocialFB.Image = global::OutlookGoogleCalendarSync.Properties.Resources.facebook;
-            this.btSocialFB.Location = new System.Drawing.Point(7, 148);
-            this.btSocialFB.Name = "btSocialFB";
-            this.btSocialFB.Size = new System.Drawing.Size(86, 34);
-            this.btSocialFB.TabIndex = 72;
-            this.btSocialFB.UseVisualStyleBackColor = true;
-            this.btSocialFB.Click += new System.EventHandler(this.btSocialFB_Click);
-            // 
-            // btSocialGitHub
-            // 
-            this.btSocialGitHub.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btSocialGitHub.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btSocialGitHub.FlatAppearance.BorderSize = 0;
-            this.btSocialGitHub.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btSocialGitHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSocialGitHub.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btSocialGitHub.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.btSocialGitHub.Image = global::OutlookGoogleCalendarSync.Properties.Resources.github;
-            this.btSocialGitHub.Location = new System.Drawing.Point(7, 298);
-            this.btSocialGitHub.Name = "btSocialGitHub";
-            this.btSocialGitHub.Size = new System.Drawing.Size(86, 34);
-            this.btSocialGitHub.TabIndex = 73;
-            this.btSocialGitHub.Text = "GitHub   ";
-            this.btSocialGitHub.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btSocialGitHub.UseVisualStyleBackColor = true;
-            this.btSocialGitHub.Click += new System.EventHandler(this.btSocialGitHub_Click);
-            // 
-            // btFbLike
-            // 
-            this.btFbLike.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btFbLike.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btFbLike.FlatAppearance.BorderSize = 0;
-            this.btFbLike.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.btFbLike.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btFbLike.Image = global::OutlookGoogleCalendarSync.Properties.Resources.facebook_like;
-            this.btFbLike.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btFbLike.Location = new System.Drawing.Point(100, 148);
-            this.btFbLike.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btFbLike.Name = "btFbLike";
-            this.btFbLike.Size = new System.Drawing.Size(79, 34);
-            this.btFbLike.TabIndex = 74;
-            this.btFbLike.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.label2.Location = new System.Drawing.Point(149, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(192, 15);
-            this.label2.TabIndex = 38;
-            this.label2.Text = "Get Social && Spread The Word!";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // pbSocialDonate
-            // 
-            this.pbSocialDonate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbSocialDonate.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSocialDonate.Image = global::OutlookGoogleCalendarSync.Properties.Resources.paypalDonate;
-            this.pbSocialDonate.Location = new System.Drawing.Point(206, 45);
-            this.pbSocialDonate.Name = "pbSocialDonate";
-            this.pbSocialDonate.Size = new System.Drawing.Size(75, 23);
-            this.pbSocialDonate.TabIndex = 40;
-            this.pbSocialDonate.TabStop = false;
-            this.pbSocialDonate.Click += new System.EventHandler(this.pbDonate_Click);
-            // 
+            //
             // trayIcon
-            // 
+            //
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
             this.trayIcon.Text = "Outlook Google Calendar Sync";
             // 
@@ -4379,13 +4048,6 @@
             this.tabPage_About.ResumeLayout(false);
             this.tabPage_About.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgAbout)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDonate)).EndInit();
-            this.tabPage_Social.ResumeLayout(false);
-            this.tabPage_Social.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSocialBlueSkyFollow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSocialDonate)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -4398,7 +4060,6 @@
         private System.Windows.Forms.CheckBox cbVerboseOutput;
         public System.Windows.Forms.TabControl tabApp;
         public System.Windows.Forms.TabPage tabPage_Settings;
-        private System.Windows.Forms.PictureBox pbDonate;
         public Extensions.MenuButton bSyncNow;
         private System.Windows.Forms.TabControl tabAppSettings;
         private System.Windows.Forms.RadioButton rbOutlookSharedCal;
@@ -4433,18 +4094,7 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox cbAlphaReleases;
         public System.Windows.Forms.Button btCheckForUpdate;
-        private System.Windows.Forms.TabPage tabPage_Social;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label lMilestoneBlurb;
-        private System.Windows.Forms.Label lMilestone;
-        private System.Windows.Forms.Button btSocialRSSfeed;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.PictureBox pbSocialDonate;
-        private System.Windows.Forms.Button btSocialLinkedin;
         public System.Windows.Forms.ComboBox cbOutlookCalendars;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.PictureBox pbSocialBlueSkyFollow;
         private System.Windows.Forms.Panel WhatPostit;
         private System.Windows.Forms.RichTextBox tbWhatHelp;
         private System.Windows.Forms.GroupBox gbSyncOptions_When;
@@ -4553,17 +4203,10 @@
         private System.Windows.Forms.Button btCloseRegexRules;
         private System.Windows.Forms.CheckBox cbAddColours;
         public Extensions.OutlookColourPicker ddOutlookColour;
-        private System.Windows.Forms.Label lDonateTip;
         private System.Windows.Forms.CheckBox cbLocation;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.TextBox tbGoogleConnectedAcc;
         private System.Windows.Forms.CheckBox cbUseOutlookDefaultReminder;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Button btSocialSkeet;
-        private System.Windows.Forms.Button btSocialFB;
-        private System.Windows.Forms.Button btSocialGitHub;
-        private System.Windows.Forms.Button btFbLike;
         public System.Windows.Forms.Button btCustomTzMap;
         public System.Windows.Forms.Button btColourMap;
         public Extensions.GoogleColourPicker ddGoogleColour;
@@ -4585,7 +4228,6 @@
         private System.Windows.Forms.TabControl tabSettingsSub;
         private System.Windows.Forms.TabPage tabSyncSettings;
         private System.Windows.Forms.TabPage tabAppBehaviour;
-        public System.Windows.Forms.CheckBox cbSuppressSocialPopup;
         private System.Windows.Forms.Panel panelAppBehaviour;
         private System.Windows.Forms.PictureBox pbExpandProxy;
         private System.Windows.Forms.GroupBox gbAppBehaviour_Proxy;
@@ -4613,7 +4255,6 @@
         private System.Windows.Forms.ComboBox cbLoggingLevel;
         private System.Windows.Forms.CheckBox cbCreateFiles;
         private System.Windows.Forms.NumericUpDown tbStartupDelay;
-        public System.Windows.Forms.CheckBox cbHideSplash;
         private System.Windows.Forms.CheckBox cbMinimiseNotClose;
         private System.Windows.Forms.CheckBox cbPortable;
         private System.Windows.Forms.CheckBox cbShowSystemNotifications;

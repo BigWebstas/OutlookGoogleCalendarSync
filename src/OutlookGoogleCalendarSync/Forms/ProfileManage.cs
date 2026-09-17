@@ -23,13 +23,7 @@ namespace OutlookGoogleCalendarSync.Forms {
                 this.txtProfileName.Text = ddProfile.Text;
             }
 
-            if (Settings.Instance.UserIsBenefactor()) {
-                panelDonationNote.Visible = false;
-                this.Height = Convert.ToInt32(185 * Program.Magnification);
-            } else {
-                panelDonationNote.Visible = true;
-                this.Height = Convert.ToInt32(310 * Program.Magnification);
-            }
+            this.Height = Convert.ToInt32(185 * Program.Magnification);
         }
 
         private void ProfileManage_FormClosing(object sender, FormClosingEventArgs e) {
@@ -84,10 +78,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             }
 
             Settings.Instance.Save();
-        }
-
-        private void pbDonate_Click(object sender, EventArgs e) {
-            Program.Donate("Profiles");
         }
 
         /// <summary>

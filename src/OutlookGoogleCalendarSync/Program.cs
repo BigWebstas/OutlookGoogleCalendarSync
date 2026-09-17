@@ -70,7 +70,6 @@ namespace OutlookGoogleCalendarSync {
                 Updater.MakeSquirrelAware();
                 getWindowsBuildNumber();
                 Program.instancesRunning();
-                Forms.Splash.ShowMe();
 
                 SettingsStore.Upgrade.Check();
                 Settings.Load();
@@ -125,7 +124,6 @@ namespace OutlookGoogleCalendarSync {
             } finally {
                 log.Debug("Shutting down application.");
                 Outlook.Calendar.Disconnect();
-                Forms.Splash.CloseMe();
                 TimezoneDB.SystemEvents_Detach();
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
@@ -586,18 +584,6 @@ namespace OutlookGoogleCalendarSync {
                 log.Error("Failed to determine if OGCS was started by CLI.");
                 Ogcs.Exception.Analyse(ex);
                 return false;
-            }
-        }
-
-        public static void Donate(String source) {
-            try {
-                new Telemetry.GA4Event.Event(Telemetry.GA4Event.Event.Name.donate)
-                    .AddParameter("source", source)
-                    .AddParameter(GA4.General.sync_count, Settings.Instance.CompletedSyncs)
-                    .AddParameter("account_present", !String.IsNullOrEmpty(Settings.Instance.GaccountEmail))
-                    .Send();
-            } finally {
-                Helper.OpenBrowser(OgcsWebsite + "/donate?id=" + Extensions.OgcsString.ToBase64String(Settings.Instance.GaccountEmail));
             }
         }
 

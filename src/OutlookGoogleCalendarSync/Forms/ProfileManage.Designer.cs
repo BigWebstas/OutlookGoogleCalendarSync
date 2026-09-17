@@ -29,12 +29,7 @@ namespace OutlookGoogleCalendarSync.Forms {
             this.label1 = new System.Windows.Forms.Label();
             this.btOK = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
-            this.pbDonate = new System.Windows.Forms.PictureBox();
-            this.panelDonationNote = new System.Windows.Forms.Panel();
-            this.tbDonate = new System.Windows.Forms.RichTextBox();
             this.tbProfileInfo = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDonate)).BeginInit();
-            this.panelDonationNote.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtProfileName
@@ -75,48 +70,7 @@ namespace OutlookGoogleCalendarSync.Forms {
             this.btCancel.TabIndex = 3;
             this.btCancel.Text = "Cancel";
             this.btCancel.UseVisualStyleBackColor = true;
-            // 
-            // pbDonate
-            // 
-            this.pbDonate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbDonate.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDonate.Image = global::OutlookGoogleCalendarSync.Properties.Resources.paypalDonate;
-            this.pbDonate.Location = new System.Drawing.Point(195, 76);
-            this.pbDonate.Name = "pbDonate";
-            this.pbDonate.Size = new System.Drawing.Size(76, 24);
-            this.pbDonate.TabIndex = 9;
-            this.pbDonate.TabStop = false;
-            this.pbDonate.Click += new System.EventHandler(this.pbDonate_Click);
-            // 
-            // panelDonationNote
-            // 
-            this.panelDonationNote.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.panelDonationNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.panelDonationNote.Controls.Add(this.pbDonate);
-            this.panelDonationNote.Controls.Add(this.tbDonate);
-            this.panelDonationNote.Location = new System.Drawing.Point(29, 112);
-            this.panelDonationNote.Name = "panelDonationNote";
-            this.panelDonationNote.Padding = new System.Windows.Forms.Padding(10);
-            this.panelDonationNote.Size = new System.Drawing.Size(451, 113);
-            this.panelDonationNote.TabIndex = 36;
-            // 
-            // tbDonate
-            // 
-            this.tbDonate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.tbDonate.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbDonate.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbDonate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDonate.Font = new System.Drawing.Font("Comic Sans MS", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDonate.Location = new System.Drawing.Point(10, 10);
-            this.tbDonate.Name = "tbDonate";
-            this.tbDonate.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.tbDonate.Size = new System.Drawing.Size(431, 93);
-            this.tbDonate.TabIndex = 2;
-            this.tbDonate.TabStop = false;
-            this.tbDonate.Text = "Many applications would put this kind of feature behind a paywall or license.\n\nNo" +
-    "t OCGCS. The aim has always been to keep it free...though you can show your appr" +
-    "eciation via donation!";
-            // 
+            //
             // tbProfileInfo
             // 
             this.tbProfileInfo.BackColor = System.Drawing.SystemColors.Control;
@@ -138,7 +92,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(506, 272);
             this.Controls.Add(this.tbProfileInfo);
-            this.Controls.Add(this.panelDonationNote);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.label1);
@@ -151,8 +104,6 @@ namespace OutlookGoogleCalendarSync.Forms {
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Profile Management";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfileManage_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.pbDonate)).EndInit();
-            this.panelDonationNote.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,9 +115,6 @@ namespace OutlookGoogleCalendarSync.Forms {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btOK;
         private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.PictureBox pbDonate;
-        private System.Windows.Forms.Panel panelDonationNote;
-        private System.Windows.Forms.RichTextBox tbDonate;
         private System.Windows.Forms.TextBox tbProfileInfo;
     }
 }

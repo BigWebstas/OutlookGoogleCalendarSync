@@ -216,16 +216,6 @@ namespace OutlookGoogleCalendarSync.Sync {
                         String duration = "Duration: " + (stopwatch.Elapsed.TotalMinutes >= 1 ? $"{stopwatch.Elapsed.Minutes}m" : "") + stopwatch.Elapsed.Seconds + "s";
                         log.Info(duration);
                         String syncStats = $"<div style='color: grey; font-size: 11px'>{duration}<br/>Syncs completed: {Settings.Instance.CompletedSyncs}";
-                        if (!Settings.Instance.UserIsBenefactor()) {
-                            syncStats += $"<br/><a href='{Program.OgcsWebsite}/donate?id=" + Extensions.OgcsString.ToBase64String(Settings.Instance.GaccountEmail) + 
-                                "' onClick='javascript:window.external.SendAnalytics(donateEvent);' style='color: grey'>Donate</a>";
-                            Telemetry.GA4Event donateEvent = new(Telemetry.GA4Event.Event.Name.donate, out Telemetry.GA4Event.Event eventData);
-                            eventData
-                                .AddParameter("source", "console")
-                                .AddParameter(GA4.General.sync_count, Settings.Instance.CompletedSyncs)
-                                .AddParameter("account_present", true);
-                            mainFrm.Console.Update("<script>var donateEvent = JSON.stringify(" + Newtonsoft.Json.JsonConvert.SerializeObject(donateEvent).Replace("parameters", "params") + ");</script>", newLine: false, logit: false);
-                        }
                         mainFrm.Console.Update(syncStats, newLine: false, logit: false);
 
                     } else if (syncResult == SyncResult.AutoRetry) {
@@ -243,7 +233,6 @@ namespace OutlookGoogleCalendarSync.Sync {
 
                     this.setNextSync(syncResult == Sync.Engine.SyncResult.OK, updateSyncSchedule);
                     this.Profile.OgcsTimer.CalculateInterval();
-                    mainFrm.CheckSyncMilestone();
 
                 } finally {
                     Sync.Engine.Instance.bwSync?.Dispose();

@@ -19,8 +19,7 @@ namespace OutlookGoogleCalendarSync.Google {
         private const String keyringURL = "https://github.com/phw198/OutlookGoogleCalendarSync/raw/master/docs/keyring.md";
 
         public enum KeyType {
-            Standard,
-            Subscriber
+            Standard
         }
         private enum KeyStatus {
             ACTIVE,
@@ -30,7 +29,6 @@ namespace OutlookGoogleCalendarSync.Google {
         }
 
         private List<ApiKey> standardKeys = new List<ApiKey>();
-        private List<ApiKey> subscriberKeys = new List<ApiKey>();
 
         private ApiKey key;
         public ApiKey Key { 
@@ -45,7 +43,7 @@ namespace OutlookGoogleCalendarSync.Google {
         public void PickKey(KeyType keyType) {
             log.Debug("Picking a " + keyType.ToString() + " key.");
             try {
-                List<ApiKey> keyRing = (keyType == KeyType.Standard) ? standardKeys : subscriberKeys;
+                List<ApiKey> keyRing = standardKeys;
                 if (keyRing == null || keyRing.Count == 0) {
                     log.Warn(keyType.ToString() + " keyring is empty!");
                     if (!string.IsNullOrEmpty(Settings.Instance.AssignedClientIdentifier) &&
@@ -70,9 +68,6 @@ namespace OutlookGoogleCalendarSync.Google {
                     ApiKey retrievedKey = keyRing.Find(k => k.ClientId == Settings.Instance.AssignedClientIdentifier);
                     if (retrievedKey == null) {
                         log.Warn("Could not find assigned key on keyring!");
-                        if (standardKeys.Concat(subscriberKeys).Any(k => k.ClientId == Settings.Instance.AssignedClientIdentifier)) {
-                            log.Warn("The key was been taken from the other keyring!");
-                        }
                         if (keyRing == null || keyRing.Count == 0) {
                             log.Debug("Reverting to default key.");
                             Key = new ApiKey.DefaultKey(keyType);
@@ -112,8 +107,6 @@ namespace OutlookGoogleCalendarSync.Google {
 
             standardKeys = allKeys.Where(key => key.Type == KeyType.Standard.ToString()).ToList();
             log.Fine(standardKeys.Count + " are standard keys.");
-            subscriberKeys = allKeys.Where(key => key.Type == KeyType.Subscriber.ToString()).ToList();
-            log.Fine(subscriberKeys.Count + " are subscriber keys.");
         }
 
         private static List<ApiKey> getKeyRing() {
@@ -205,12 +198,6 @@ namespace OutlookGoogleCalendarSync.Google {
                     this.ProjectID = "outlook-google-calendar-sync";
                     this.ClientId = "653617509806-2nq341ol8ejgqhh2ku4j45m7q2bgdimv.apps.googleusercontent.com";
                     this.ClientSecret = "tAi-gZLWtasS58i8CcCwVwsq";
-
-                } else if (type == ApiKeyring.KeyType.Subscriber) {
-                    this.ProjectName = "Premium OGCS";
-                    this.ProjectID = "premium-ogcs";
-                    this.ClientId = "550071650559-44lnvhdu5liq5kftj5t8k0aasgei5g7t.apps.googleusercontent.com";
-                    this.ClientSecret = "MGUFapefXClJa2ysS4WNGS4k";
                 }
             }
         }

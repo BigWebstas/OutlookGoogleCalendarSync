@@ -64,7 +64,6 @@ namespace OutlookGoogleCalendarSync.Google {
                         Authenticator.GetAuthenticated();
                     }
                     if (Authenticator.Authenticated) {
-                        Authenticator.OgcsUserStatus();
                         _ = ColourPalette;
                     } else {
                         if (Forms.Main.Instance.Console.DocumentText.Contains("Authorisation to allow OGCS to manage your Google calendar was cancelled."))
@@ -106,14 +105,7 @@ namespace OutlookGoogleCalendarSync.Google {
         public Int16 UTCoffset { get; internal set; }
         public String SubscriptionInvite {
             get {
-                String invite = "Google's free calendar quota ran out! You'll need to wait for fresh quota";
-                if (string.IsNullOrEmpty(Settings.Instance.GaccountEmail))
-                    invite += ".";
-                else {
-                    String url = Program.OgcsWebsite + "/subscribe?id=" + OgcsString.ToBase64String("OGCS Premium for " + Settings.Instance.GaccountEmail);
-                    invite += $" or <a href='{url}' target='_blank'>get guaranteed quota</a> for just £1/month.";
-                }
-                return invite;
+                return "Google's free calendar quota ran out! You'll need to wait for fresh quota.";
             }
         }
 
@@ -2466,9 +2458,6 @@ namespace OutlookGoogleCalendarSync.Google {
                         //Includes rate for "limit 'Queries per minute'"
                         log.Fail(ex.FriendlyMessage());
                         Ogcs.Exception.LogAsFail(ref ex);
-
-                        if (Settings.Instance.Subscribed > System.DateTime.Now.AddYears(-1))
-                            return ApiException.backoffThenRetry;
 
                         log.Warn("Google's free Calendar quota is being exceeded!");
                         Forms.Main.Instance.SyncNote(Forms.Main.SyncNotes.QuotaExceededInfo, null);
